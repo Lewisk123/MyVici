@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MYVICI | Geared For Greatness</title>
-  <meta name="description" content="Premium performance kit storage for race day, training, travel and adventure. Founder Prototype Drop launching with 15 original VICI bags." />
+  <meta name="description" content="MYVICI performance kit storage for race day, training, travel and adventure." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -12,12 +12,11 @@
     :root{
       --black:#050607;
       --charcoal:#0d1011;
-      --soft:#15191b;
       --white:#f5f5f2;
       --muted:#a7aca8;
       --lime:#9bd30b;
       --line:rgba(255,255,255,.12);
-      --limeLine:rgba(155,211,11,.32);
+      --limeLine:rgba(155,211,11,.34);
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -26,22 +25,25 @@
     img{max-width:100%;display:block}
     .site{overflow:hidden;background:var(--black)}
     .wrap{width:min(1180px,calc(100% - 36px));margin:0 auto}
+
     .nav{position:fixed;top:0;left:0;right:0;z-index:20;padding:18px 0;background:linear-gradient(180deg,rgba(0,0,0,.78),rgba(0,0,0,0));backdrop-filter:blur(10px)}
     .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:18px}
-    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:950;letter-spacing:.11em}
-    .brand-mark{width:42px;height:42px;border:1px solid var(--limeLine);border-radius:14px;display:grid;place-items:center;background:rgba(155,211,11,.08);box-shadow:0 0 38px rgba(155,211,11,.14)}
-    .brand span:last-child{font-size:20px}
-    .brand b{color:var(--lime)}
+    .brand{text-decoration:none;font-weight:950;letter-spacing:.04em;font-size:23px}
+    .brand .my{color:var(--white)}
+    .brand .vici{color:var(--lime)}
+    .tagline{display:block;font-size:8px;letter-spacing:.42em;color:rgba(255,255,255,.72);margin-top:3px}
     .links{display:flex;gap:22px;align-items:center;font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:rgba(255,255,255,.75)}
     .links a{text-decoration:none}
     .links a:hover{color:var(--lime)}
     .top-cta{border:1px solid var(--limeLine);padding:11px 16px;border-radius:999px;color:var(--lime)!important;background:rgba(155,211,11,.06)}
-    .hero{min-height:100vh;position:relative;display:grid;align-items:end;padding:130px 0 76px;isolation:isolate}
+
+    .hero{min-height:100vh;position:relative;display:grid;align-items:end;padding:130px 0 76px;isolation:isolate;background:#050607}
     .hero::before{content:"";position:absolute;inset:0;background:
-      linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.55) 43%,rgba(0,0,0,.18)),
-      linear-gradient(0deg,var(--black),rgba(0,0,0,.06) 46%,rgba(0,0,0,.72)),
-      url("hero-camper.png") center/cover no-repeat;z-index:-2}
-    .hero::after{content:"";position:absolute;right:8%;bottom:7%;width:530px;height:530px;background:radial-gradient(circle,rgba(155,211,11,.22),transparent 63%);filter:blur(18px);z-index:-1}
+      linear-gradient(90deg,rgba(0,0,0,.86),rgba(0,0,0,.48) 45%,rgba(0,0,0,.18)),
+      linear-gradient(0deg,var(--black),rgba(0,0,0,.03) 44%,rgba(0,0,0,.64)),
+      url("hero.jpg") center/cover no-repeat;z-index:-2}
+    .hero::after{content:"";position:absolute;right:5%;bottom:4%;width:540px;height:540px;background:radial-gradient(circle,rgba(155,211,11,.22),transparent 64%);filter:blur(18px);z-index:-1}
+
     .eyebrow{color:var(--lime);font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:950}
     h1,h2,h3,p{margin-top:0}
     .hero h1,.section-title{font-size:clamp(46px,8vw,104px);line-height:.89;letter-spacing:-.075em;text-transform:uppercase;margin:18px 0 22px}
@@ -55,6 +57,7 @@
     .btn-secondary{border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.055);color:var(--white)}
     .pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
     .pill{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:10px 13px;background:rgba(255,255,255,.05)}
+
     section{position:relative;padding:98px 0}
     .announcement{border-top:1px solid var(--limeLine);border-bottom:1px solid var(--limeLine);background:linear-gradient(90deg,rgba(155,211,11,.15),rgba(255,255,255,.035),rgba(155,211,11,.08));padding:17px 0;text-align:center;text-transform:uppercase;font-size:13px;letter-spacing:.12em;font-weight:950}
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
@@ -66,17 +69,21 @@
     .list{list-style:none;padding:0;margin:25px 0;display:grid;gap:13px;color:var(--muted)}
     .list li{position:relative;padding-left:23px}
     .list li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:var(--lime)}
-    .media-card{border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.11);background:#111;box-shadow:0 30px 80px rgba(0,0,0,.25)}
-    .media-card img{width:100%;height:100%;object-fit:cover;min-height:420px}
+    .media-card{border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.11);background:#101214;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+    .media-card img{width:100%;height:auto;object-fit:contain;background:#101214}
+
     .features{background:#070808}
     .feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:38px}
     .feature{border:1px solid rgba(255,255,255,.11);border-radius:24px;background:rgba(255,255,255,.04);padding:24px;min-height:178px}
     .feature b{display:block;color:var(--white);text-transform:uppercase;letter-spacing:.1em;font-size:13px;margin-bottom:10px}
     .feature p{margin:0;color:var(--muted);font-size:14px;line-height:1.58}
+
     .gallery{background:linear-gradient(180deg,#070808,#050607)}
-    .gallery-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:38px}
-    .gallery-stack{display:grid;gap:16px}
-    .gallery img{width:100%;height:100%;min-height:280px;object-fit:cover;border-radius:28px;border:1px solid rgba(255,255,255,.11)}
+    .gallery-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:38px;align-items:start}
+    .gallery-stack{display:grid;gap:18px}
+    .gallery-frame{border-radius:28px;border:1px solid rgba(255,255,255,.11);background:#101214;padding:10px;overflow:hidden}
+    .gallery-frame img{width:100%;height:auto;object-fit:contain;border-radius:20px;background:#101214}
+
     .story{background:radial-gradient(circle at 85% 15%,rgba(155,211,11,.11),transparent 35%),#050607}
     .quote{font-size:clamp(28px,4vw,56px);line-height:1.02;letter-spacing:-.055em;text-transform:uppercase;font-weight:950;margin:0}
     .product{background:linear-gradient(90deg,rgba(155,211,11,.08),transparent 48%),#050607}
@@ -88,17 +95,21 @@
     .label-box{border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:18px;background:rgba(255,255,255,.035)}
     .label-box b{display:block;text-transform:uppercase;font-size:12px;letter-spacing:.12em;margin-bottom:8px}
     .label-box p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+
     .next{background:radial-gradient(circle at 50% 0%,rgba(155,211,11,.2),transparent 34%),#050607;text-align:center}
     .next .copy{margin-left:auto;margin-right:auto}
-    .logo-strip{margin:0 auto 28px;width:min(520px,100%);opacity:.95}
+    .big-logo{font-weight:950;font-size:clamp(42px,7vw,86px);letter-spacing:-.07em;margin-bottom:10px}
+    .big-logo .my{color:var(--white)}
+    .big-logo .vici{color:var(--lime)}
+    .big-tag{letter-spacing:.34em;font-size:12px;text-transform:uppercase;color:rgba(255,255,255,.76);font-weight:900;margin-bottom:30px}
     footer{border-top:1px solid rgba(255,255,255,.1);padding:28px 0;color:rgba(255,255,255,.58);font-size:13px}
+
     @media(max-width:900px){
       .links{display:none}
       .grid2,.gallery-grid,.product-panel{grid-template-columns:1fr}
       .feature-grid{grid-template-columns:1fr 1fr}
       section{padding:76px 0}
       .hero{padding-top:120px}
-      .media-card img{min-height:310px}
       .split-labels{grid-template-columns:1fr}
     }
     @media(max-width:560px){
@@ -117,8 +128,8 @@
     <nav class="nav">
       <div class="wrap nav-inner">
         <a class="brand" href="#">
-          <span class="brand-mark">V</span>
-          <span>MY<b>VICI</b></span>
+          <span><span class="my">MY</span><span class="vici">VICI</span></span>
+          <span class="tagline">GEARED FOR GREATNESS</span>
         </a>
         <div class="links">
           <a href="#founder">Founder Drop</a>
@@ -196,10 +207,10 @@
         <h2 class="section-title">Pack the<br><span class="lime">mission.</span></h2>
         <p class="copy">Shoes, poles, layers, bottles, nutrition, first aid, documents and the bits you normally lose ten minutes before leaving.</p>
         <div class="gallery-grid">
-          <img src="kit-flatlay.jpg" alt="MYVICI race kit flat lay">
+          <div class="gallery-frame"><img src="kit-flatlay.jpg" alt="MYVICI race kit flat lay"></div>
           <div class="gallery-stack">
-            <img src="bag-interior.jpg" alt="Inside the MYVICI bag">
-            <img src="packed-kit.jpg" alt="Packed race kit setup">
+            <div class="gallery-frame"><img src="bag-interior.jpg" alt="Inside the MYVICI bag"></div>
+            <div class="gallery-frame"><img src="packed-kit.jpg" alt="Packed race kit setup"></div>
           </div>
         </div>
       </div>
@@ -221,7 +232,7 @@
     <section id="shop" class="product">
       <div class="wrap product-panel">
         <div class="media-card">
-          <img src="founder-bag-front.jpg" alt="VICI Founder Prototype bag">
+          <img src="founder-bag.jpg" alt="VICI Founder Prototype bag">
         </div>
         <div class="product-info">
           <div class="eyebrow">Founder Prototype Drop</div>
@@ -242,9 +253,10 @@
 
     <section id="next" class="next">
       <div class="wrap">
-        <img class="logo-strip" src="myvici-logo.svg" alt="MYVICI Geared For Greatness logo">
+        <div class="big-logo"><span class="my">MY</span><span class="vici">VICI</span></div>
+        <div class="big-tag">GEARED FOR GREATNESS</div>
         <div class="eyebrow">Next Release</div>
-        <h2 class="section-title">MY<span class="lime">VICI</span><br>is coming.</h2>
+        <h2 class="section-title">The new era<br><span class="lime">is coming.</span></h2>
         <p class="copy">The official lime green and white MYVICI design will follow after the Founder Drop. Join the list for early access, launch updates and first look product news.</p>
         <div class="button-row" style="justify-content:center">
           <a class="btn btn-secondary" href="mailto:hello@myvici.com?subject=MYVICI%20Next%20Release">Register Interest</a>
