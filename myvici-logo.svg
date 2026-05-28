@@ -1,0 +1,9 @@
+<svg width="980" height="260" viewBox="0 0 980 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="980" height="260" rx="24" fill="none"/>
+  <path d="M58 72L118 188L178 72H218L138 218H98L18 72H58Z" fill="#9BD30B"/>
+  <path d="M266 72H314V218H266V72Z" fill="#F5F5F2"/>
+  <path d="M386 72H452L502 158L552 72H618V218H572V132L522 218H482L432 132V218H386V72Z" fill="#F5F5F2"/>
+  <text x="660" y="158" font-family="Arial Black, Impact, sans-serif" font-size="84" font-weight="900" letter-spacing="-4" fill="#F5F5F2">MY</text>
+  <text x="785" y="158" font-family="Arial Black, Impact, sans-serif" font-size="84" font-weight="900" letter-spacing="-4" fill="#9BD30B">VICI</text>
+  <text x="663" y="203" font-family="Arial, sans-serif" font-size="24" font-weight="800" letter-spacing="6" fill="#F5F5F2">GEARED FOR GREATNESS</text>
+</svg>
