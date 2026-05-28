@@ -39,12 +39,17 @@
     .links a{text-decoration:none}.links a:hover{color:var(--lime)}
     .top-cta{border:1px solid var(--limeLine);padding:11px 16px;border-radius:999px;background:rgba(155,211,11,.08);color:var(--lime)!important}
 
-    .hero{position:relative;min-height:100svh;display:grid;align-items:end;padding:132px 0 80px;isolation:isolate;background:#050607}
+    .hero{position:relative;min-height:100svh;display:grid;align-items:center;padding:132px 0 80px;isolation:isolate;background:
+      radial-gradient(circle at 78% 48%,rgba(155,211,11,.16),transparent 34%),
+      linear-gradient(135deg,#050607 0%,#0b0e0f 46%,#050607 100%)}
     .hero::before{content:"";position:absolute;inset:0;background:
-      linear-gradient(90deg,rgba(0,0,0,.86),rgba(0,0,0,.50) 42%,rgba(0,0,0,.16)),
-      linear-gradient(0deg,var(--black),rgba(0,0,0,.05) 44%,rgba(0,0,0,.64)),
-      url("hero-snow.jpg") center/cover no-repeat;z-index:-2}
+      linear-gradient(90deg,rgba(0,0,0,.64),rgba(0,0,0,.22) 58%,rgba(0,0,0,.48)),
+      url("hero-snow.jpg") center/cover no-repeat;opacity:.28;z-index:-2}
     .hero::after{content:"";position:absolute;left:8%;bottom:4%;width:540px;height:540px;border-radius:999px;background:radial-gradient(circle,rgba(155,211,11,.18),transparent 66%);filter:blur(18px);z-index:-1}
+    .hero-layout{display:grid;grid-template-columns:.92fr 1.08fr;gap:42px;align-items:center}
+    .hero-visual{border:1px solid rgba(255,255,255,.12);border-radius:34px;overflow:hidden;background:#101214;box-shadow:0 40px 120px rgba(0,0,0,.52)}
+    .hero-visual img{width:100%;height:auto;display:block;object-fit:contain;background:#101214}
+    .hero-copy-panel{position:relative;z-index:2}
     .eyebrow{color:var(--lime);font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:950}
     h1,h2,h3,p{margin-top:0}
     .hero h1,.section-title{font-size:clamp(46px,8vw,104px);line-height:.89;letter-spacing:-.075em;text-transform:uppercase;margin:18px 0 22px}
@@ -101,10 +106,11 @@
 
     @media(max-width:900px){
       .links{display:none}
+      .hero-layout{grid-template-columns:1fr}
+      .hero{padding-top:120px}
       .grid2,.gallery-grid,.product-panel{grid-template-columns:1fr}
       .feature-grid,.spec-grid,.grid3{grid-template-columns:1fr 1fr}
       section{padding:76px 0}
-      .hero{padding-top:120px}
       .split-labels{grid-template-columns:1fr}
       .media-cover img{min-height:auto}
     }
@@ -140,20 +146,25 @@
     </nav>
 
     <header class="hero">
-      <div class="wrap">
-        <div class="eyebrow">Premium endurance / adventure lifestyle kit</div>
-        <h1>Geared for<br><span class="lime">greatness.</span></h1>
-        <p class="copy">A performance kit organiser built for race day, training, travel, camper life and the pursuit of more. One place for the chaos before the start line.</p>
-        <div class="price-pill">Founder Drop Price <span>£79.99</span></div>
-        <div class="button-row">
-          <a class="btn btn-primary" href="#shop">Shop Founder Drop</a>
-          <a class="btn btn-secondary" href="#system">Explore Features</a>
+      <div class="wrap hero-layout">
+        <div class="hero-copy-panel">
+          <div class="eyebrow">Premium endurance / adventure lifestyle kit</div>
+          <h1>Geared for<br><span class="lime">greatness.</span></h1>
+          <p class="copy">A performance kit organiser built for race day, training, travel, camper life and the pursuit of more. One place for the chaos before the start line.</p>
+          <div class="price-pill">Founder Drop Price <span>£79.99</span></div>
+          <div class="button-row">
+            <a class="btn btn-primary" href="#shop">Shop Founder Drop</a>
+            <a class="btn btn-secondary" href="#system">Explore Features</a>
+          </div>
+          <div class="pills">
+            <span class="pill">Race Day</span>
+            <span class="pill">Travel</span>
+            <span class="pill">Ultra Running</span>
+            <span class="pill">Adventure Ready</span>
+          </div>
         </div>
-        <div class="pills">
-          <span class="pill">Race Day</span>
-          <span class="pill">Travel</span>
-          <span class="pill">Ultra Running</span>
-          <span class="pill">Adventure Ready</span>
+        <div class="hero-visual">
+          <img src="hero-snow.jpg" alt="MYVICI branded camper van and bag in snowy outdoor setting">
         </div>
       </div>
     </header>
@@ -215,10 +226,10 @@
         <h2 class="section-title">Pack the<br><span class="lime">mission.</span></h2>
         <p class="copy">Shoes, poles, layers, bottles, nutrition, first aid, travel documents and the bits you normally lose ten minutes before leaving.</p>
         <div class="gallery-grid">
-          <div class="gallery-frame"><img src="kit-flatlay.jpg" alt="Race kit flat lay with VICI bag"></div>
+          <div class="gallery-frame"><img src="kit-flatlay-wide.jpg" alt="Full race kit laid out beside the VICI founder bag"></div>
           <div class="gallery-stack">
             <div class="gallery-frame"><img src="bag-packed.jpg" alt="Packed organiser with shoe and nutrition"></div>
-            <div class="gallery-frame"><img src="empty-interior.jpg" alt="Empty organiser layout"></div>
+            <div class="gallery-frame"><img src="kit-flatlay.jpg" alt="Race kit flat lay showing how much fits inside"></div>
           </div>
         </div>
       </div>
@@ -227,7 +238,7 @@
     <section class="story">
       <div class="wrap grid2">
         <div class="media-card media-cover">
-          <img src="van-real-snow.jpg" alt="MYVICI matte green camper in snow">
+          <img src="hero-highlands.jpg" alt="MYVICI branded camper van in Highland setting">
         </div>
         <div>
           <div class="eyebrow">Premium endurance / adventure lifestyle</div>
