@@ -40,10 +40,26 @@
     @media(max-width:1000px){.hero-split-grid{grid-template-columns:1fr}.hero-image-card{max-width:820px;margin:0 auto}.waitlist-strip .waitlist-card{grid-template-columns:1fr}.waitlist-strip .btn{width:100%}}
     @media(max-width:900px){.hero-split{margin-top:98px;padding:58px 0 58px!important}}
     @media(max-width:560px){.hero-split{margin-top:94px;padding:44px 0 48px!important}.hero-split h1{font-size:46px}.hero-image-card{border-radius:24px}.hero-image-badge{left:14px;bottom:14px;font-size:10px}.waitlist-strip{padding-bottom:64px}.waitlist-strip .waitlist-card{border-radius:24px;padding:24px}}
+
+    /* Mobile purchase path fix: keeps a clear Buy Now route visible on phones */
+    #shop{scroll-margin-top:118px}
+    .mobile-buy-bar{display:none}
+    @media(max-width:900px){
+      .mobile-buy-bar{position:fixed;left:14px;right:14px;bottom:14px;z-index:80;display:grid;grid-template-columns:1fr 1fr;gap:10px;pointer-events:none}
+      .mobile-buy-bar a{pointer-events:auto;min-height:50px;padding:0 14px;border-radius:999px;text-decoration:none;text-transform:uppercase;font-size:12px;letter-spacing:.09em;font-weight:950;display:flex;align-items:center;justify-content:center;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+      .mobile-buy-bar .mobile-buy{background:linear-gradient(135deg,var(--lime),var(--lime2));color:#061005}
+      .mobile-buy-bar .mobile-wait{background:rgba(5,6,7,.92);border:1px solid var(--limeLine);color:var(--lime);backdrop-filter:blur(10px)}
+      body{padding-bottom:78px}
+    }
   </style>
 </head>
 <body>
   <div class="ticker" aria-label="MYVICI launch news"><div class="ticker-track"><span>Join the waiting list ✦ Founder Drop ✦ <b>£20 off with code FOUNDER20</b> ✦ MYVICI Next Generation coming soon ✦ Geared For Greatness ✦</span><span>Join the waiting list ✦ Founder Drop ✦ <b>£20 off with code FOUNDER20</b> ✦ MYVICI Next Generation coming soon ✦ Geared For Greatness ✦</span></div></div>
+
+  <div class="mobile-buy-bar" aria-label="Quick actions">
+    <a class="mobile-buy" href="#shop">Buy Now</a>
+    <a class="mobile-wait" href="#waitlist">Waiting List</a>
+  </div>
   <main class="site">
     <nav class="nav">
       <div class="wrap nav-inner">
@@ -52,7 +68,7 @@
         <button class="menu-btn" id="menuBtn" aria-label="Open menu">Menu</button>
       </div>
     </nav>
-    <div class="mobile-menu" id="mobileMenu"><a href="#waitlist">Waiting List</a><a href="#shop">Founder Bag</a><a href="#system">Features</a><a href="#founder-bio">Founder</a><a href="#meaning">Meaning</a></div>
+    <div class="mobile-menu" id="mobileMenu"><a href="#shop">Buy Now</a><a href="#waitlist">Waiting List</a><a href="#system">Features</a><a href="#founder-bio">Founder</a><a href="#meaning">Meaning</a></div>
 
     <header id="top" class="hero hero-split">
       <div class="wrap hero-split-grid">
@@ -88,7 +104,7 @@
     <section id="shop" class="product">
       <div class="wrap product-panel">
         <div class="media-card"><img src="assets/bag-kit-grass.jpg" alt="MYVICI founder bag beside race and adventure kit" loading="lazy"></div>
-        <div class="product-info"><div class="eyebrow">Founder Drop 2026</div><h2 class="section-title">Secure<br><span class="lime">founder bag.</span></h2><p class="small">The first Founder Drop features the original VICI branded organiser bag before the updated MYVICI production run arrives.</p><div class="notice"><strong>Founder offer:</strong> Retail price £79.99. Use code <strong>FOUNDER20</strong> at checkout for £20 off while Founder stock lasts.</div><div class="discount-code">FOUNDER20</div><div class="shopify-holder"><div id='product-component-1782147379789'></div></div></div>
+        <div class="product-info"><div class="eyebrow">Founder Drop 2026</div><h2 class="section-title">Buy<br><span class="lime">now.</span></h2><p class="small">The first Founder Drop features the original VICI branded organiser bag before the updated MYVICI production run arrives.</p><div class="notice"><strong>Founder offer:</strong> Retail price £79.99. Use code <strong>FOUNDER20</strong> at checkout for £20 off while Founder stock lasts.</div><div class="discount-code">FOUNDER20</div><div class="shopify-holder"><div id='product-component-1782147379789'></div></div></div>
       </div>
     </section>
 
