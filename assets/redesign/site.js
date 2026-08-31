@@ -1,6 +1,12 @@
 /* Small progressive enhancements. The content stays readable without JavaScript. */
 (() => {
   'use strict';
+
+  /* Keep the header wordmark on-brand: MY stays white, VICI uses MYVICI lime. */
+  document.querySelectorAll('.site-header .brand > span').forEach((wordmark) => {
+    wordmark.innerHTML = 'MY<span>VICI</span>';
+  });
+
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const ticker = document.querySelector('.ticker');
   const tickerButton = document.querySelector('.ticker-control');
