@@ -1,6 +1,5 @@
 {
   "headers": [
-    { "source": "/redesign.html", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }] },
-    { "source": "/our-story.html", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }] }
+    { "source": "/redesign.html", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }] }
   ]
 }
