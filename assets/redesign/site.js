@@ -2,6 +2,17 @@
 (() => {
   'use strict';
 
+  /* Vercel Web Analytics is enabled in the project dashboard; load its cookieless tracker on every page. */
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  if (!document.querySelector('script[src="/_vercel/insights/script.js"]')) {
+    const analytics = document.createElement('script');
+    analytics.src = '/_vercel/insights/script.js';
+    analytics.defer = true;
+    analytics.dataset.sdkn = '@vercel/analytics';
+    analytics.dataset.sdkv = '2.0.1';
+    document.head.appendChild(analytics);
+  }
+
   /* Keep the header wordmark on-brand: MY stays white, VICI uses MYVICI lime. */
   document.querySelectorAll('.site-header .brand > span').forEach((wordmark) => {
     wordmark.innerHTML = 'MY<span>VICI</span>';
