@@ -55,6 +55,10 @@
         cart: {
           styles: {
             cart: { 'background-color': '#10110f' },
+            footer: { 'background-color': '#10110f' },
+            discountText: { color: '#f8f9f3' },
+            discountAmount: { color: '#f8f9f3' },
+            discountIcon: { fill: '#c1fa3c' },
             title: { color: '#f8f9f3' },
             header: { color: '#f8f9f3' },
             lineItems: { color: '#f8f9f3' },
