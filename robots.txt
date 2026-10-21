@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://myvici.com/sitemap.xml
