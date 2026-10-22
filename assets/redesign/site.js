@@ -2,25 +2,7 @@
 (() => {
   'use strict';
 
-  /*
-   * Vercel Web Analytics is enabled for the MYVICI Vercel project.
-   * Use its absolute resilient-intake URLs so visits are recorded whether the
-   * same static build is opened on myvici.com or on the Vercel production alias.
-   */
-  const analyticsOrigin = 'https://my-vici.vercel.app';
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  if (!document.querySelector('script[data-myvici-vercel-analytics]')) {
-    const analytics = document.createElement('script');
-    analytics.src = `${analyticsOrigin}/_vercel/insights/script.js`;
-    analytics.defer = true;
-    analytics.crossOrigin = 'anonymous';
-    analytics.dataset.viewEndpoint = `${analyticsOrigin}/_vercel/insights/view`;
-    analytics.dataset.eventEndpoint = `${analyticsOrigin}/_vercel/insights/event`;
-    analytics.dataset.sdkn = '@vercel/analytics';
-    analytics.dataset.sdkv = '2.0.1';
-    analytics.dataset.myviciVercelAnalytics = 'true';
-    document.head.appendChild(analytics);
-  }
+  /* Optional analytics are managed separately by analytics.js. */
 
   /* Keep the header wordmark on-brand: MY stays white, VICI uses MYVICI lime. */
   document.querySelectorAll('.site-header .brand > span').forEach((wordmark) => {
@@ -92,3 +74,4 @@
     }
   }
 })();
+
