@@ -109,13 +109,31 @@
       }
     }, true);
     const prepareNavigation = event => {
-      if (!event.target.closest?.(selector)) return;
-      refresh(cart); // Current cart URL; Google may decorate later while bubbling.
-      if (!checkoutURL(cart)) event.preventDefault();
-      if (!window.myviciAnalytics?.canLinkCheckout?.()) {
+      const link = event.target.closest?.(selector);
+      if (!link) return;
+      const currentURL = checkoutURL(cart);
+      const mayLink = !!window.myviciAnalytics?.canLinkCheckout?.();
+      let currentLink = false;
+      if (mayLink && currentURL) {
+        try {
+          const clean = new URL(link.href);
+          clean.searchParams.delete('_gl');
+          clean.searchParams.delete('_ga');
+          currentLink = clean.href === currentURL;
+        } catch { /* Refresh an invalid or stale link from the trusted cart. */ }
+      }
+      // Preserve a tag's earlier decoration only on the exact current cart.
+      // Never carry a changed host, key, path or other query parameter forward.
+      if (!currentLink) refresh(cart);
+      if (!currentURL) event.preventDefault();
+      if (!mayLink) {
         // Default link navigation still works, but a retained tag listener
         // cannot decorate it after refusal/expiry or on a preview host.
         event.stopPropagation();
+      } else {
+        // Run after this native activation, not during its default action.
+        // A later click starts clean rather than reusing an expired decoration.
+        setTimeout(() => { if (cart.node.isConnected) refresh(cart); }, 0);
       }
     };
     cart.node.addEventListener('click', prepareNavigation, true);

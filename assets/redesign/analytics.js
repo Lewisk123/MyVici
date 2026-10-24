@@ -57,6 +57,12 @@
       gtag('consent', 'default', denied);
       gtag('consent', 'update', { ...denied, analytics_storage: 'granted' });
       gtag('set', { page_location: pageLocation, page_referrer: referrerOrigin, page_title: pages[location.pathname] });
+      // Documented linker configuration precedes js/config. It is queued only
+      // after analytics acceptance, on the existing production-host allowlist.
+      gtag('set', 'linker', {
+        domains: ['myvici.com', 'www.myvici.com', '7nrbmy-7x.myshopify.com'],
+        decorate_forms: false
+      });
       gtag('js', new Date());
       gtag('config', MEASUREMENT_ID, {
         send_page_view: false,
