@@ -120,6 +120,7 @@
     gaStarted = false;
     clearGaCookies();
     document.querySelectorAll('script[data-myvici-analytics]').forEach(script => script.remove());
+    window.dispatchEvent(new Event('myvici:analytics-disabled'));
   };
   const choose = value => {
     choice = value;
@@ -179,7 +180,12 @@
       location.reload();
     }
   });
-  window.myviciAnalytics = { openSettings: () => { panel.hidden = false; panel.querySelector('button').focus(); } };
+  window.myviciAnalytics = {
+    openSettings: () => { panel.hidden = false; panel.querySelector('button').focus(); },
+    // A failed/expired preference read conservatively prevents cross-domain
+    // decoration; checkout itself never depends on this optional permission.
+    canLinkCheckout: () => eligible && choice === 'accepted' && gaStarted && readChoice() === 'accepted'
+  };
   choice = readChoice();
   panel.hidden = choice !== null;
   if (choice === 'accepted') start();

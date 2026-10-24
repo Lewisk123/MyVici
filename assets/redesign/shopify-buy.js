@@ -6,6 +6,7 @@
   const purchase = mount.closest('.purchase-area');
   const loading = purchase.querySelector('.shop-loading');
   const fallback = purchase.querySelector('.shop-fallback');
+  const cartBridge = window.myviciCartCheckout;
   let completed = false;
   const showReady = () => {
     if (completed) return;
@@ -53,6 +54,10 @@
           text: { button: 'BUY THE ORGANISER' }
         },
         cart: {
+          // A parent-document link gives the browser its normal one-click
+          // navigation, including consented Google domain linking. If this
+          // optional adapter failed to load, retain Shopify's original cart.
+          ...(cartBridge ? { iframe: false, events: cartBridge.events } : {}),
           styles: {
             cart: { 'background-color': '#10110f' },
             footer: { 'background-color': '#10110f' },
