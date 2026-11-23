@@ -161,7 +161,7 @@
       if(result.userErrors?.length)throw new Error(result.userErrors.map(e=>e.message).join(' '));
       if(!result.cart)throw new Error('Your bag could not be updated. Please try again.');
       status(panel,'Added to your bag.');
-      if(button.dataset.buy==='now') location.assign(checkoutURL(cart.checkoutUrl));else openCart();
+      if(button.dataset.buy==='now') { const destination=checkoutURL(cart.checkoutUrl);window.dispatchEvent(new Event('myvici:checkout'));location.assign(destination); } else openCart();
     } catch(error){status(panel,error.name==='TimeoutError'?'The shop took too long to respond. Please try again.':error.message);}
     finally{busy=false;setButtons();renderCart();}
   })));

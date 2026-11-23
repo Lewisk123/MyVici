@@ -170,10 +170,11 @@
     if (!anchor || choice !== 'accepted') return;
     try {
       const u = new URL(anchor.href, location.href);
-      if (hosts.has(u.hostname) && ['/', '/index.html'].includes(u.pathname) && u.hash === '#shop') track('product_section_click');
-      else if (u.protocol === 'https:' && u.hostname === '7nrbmy-7x.myshopify.com' && u.pathname === '/cart/56804961976644:1') track('checkout_link_click');
+      if (hosts.has(u.hostname) && (['/products/myvici-performance-bag/', '/products/myvici-beanie/'].includes(u.pathname) || (['/', '/index.html'].includes(u.pathname) && u.hash === '#shop'))) track('product_section_click');
+      else if (anchor.matches('[data-checkout]') && anchor.getAttribute('aria-disabled') !== 'true' && u.protocol === 'https:' && u.hostname === '7nrbmy-7x.myshopify.com' && u.pathname.startsWith('/cart/c/')) track('checkout_link_click');
     } catch { /* No arbitrary link text, destination or form contents enter analytics. */ }
   });
+  window.addEventListener('myvici:checkout', () => track('checkout_link_click'));
   window.addEventListener('storage', event => {
     if (event.key !== STORAGE_KEY && event.key !== null) return;
     if (readChoice() !== 'accepted' && choice === 'accepted') {

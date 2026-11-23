@@ -292,6 +292,8 @@ footer small { color:var(--muted); font-size:11px; }
 .cart-toggle { color:var(--white); background:transparent; border:1px solid var(--rule); padding:10px 12px; min-height:44px; font-size:12px; font-weight:700; cursor:pointer; }
 .cart-toggle span { color:var(--lime); margin-left:5px; }
 .purchase-panel { margin-top:20px; }
+.legacy-anchor { display:block; height:0; scroll-margin-top:110px; }
+#shop,#coming { scroll-margin-top:110px; }
 .bag-price s,.range-price s { margin-left:12px; color:var(--muted); font-size:.65em; font-weight:400; }
 .launch-offer { font-size:12px; text-transform:none; letter-spacing:0; line-height:1.7; max-width:49ch; border-top:1px solid var(--rule); padding-top:14px; margin-bottom:18px; }
 .buy-actions { display:flex; align-items:end; gap:12px; flex-wrap:wrap; }
