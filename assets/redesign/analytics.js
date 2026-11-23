@@ -7,8 +7,12 @@
   const MAX_AGE = 180 * 24 * 60 * 60 * 1000;
   const hosts = new Set(['myvici.com', 'www.myvici.com']);
   const pages = {
-    '/': 'MYVICI | Organiser',
-    '/index.html': 'MYVICI | Organiser',
+    '/': 'MYVICI | Move beyond the known',
+    '/index.html': 'MYVICI | Move beyond the known',
+    '/products/myvici-performance-bag/': 'MYVICI Organiser Bag',
+    '/products/myvici-performance-bag': 'MYVICI Organiser Bag',
+    '/products/myvici-beanie/': 'MYVICI Beanie',
+    '/products/myvici-beanie': 'MYVICI Beanie',
     '/our-story.html': 'Our Story | MYVICI',
     '/delivery-returns.html': 'Shipping & Returns | MYVICI',
     '/privacy.html': 'Privacy & Cookies | MYVICI'

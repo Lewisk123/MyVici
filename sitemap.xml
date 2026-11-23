@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://myvici.com/</loc>
-  </url>
+  <url><loc>https://myvici.com/</loc></url>
+  <url><loc>https://myvici.com/products/myvici-performance-bag/</loc></url>
+  <url><loc>https://myvici.com/products/myvici-beanie/</loc></url>
+  <url><loc>https://myvici.com/our-story.html</loc></url>
+  <url><loc>https://myvici.com/delivery-returns.html</loc></url>
+  <url><loc>https://myvici.com/privacy.html</loc></url>
 </urlset>
