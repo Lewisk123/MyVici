@@ -35,10 +35,10 @@
   });
   function refreshPromos() {
     refreshPrices();
-    document.querySelectorAll('[data-promo-summary]').forEach(node => { node.textContent=promoActive() ? 'Black Friday · Bag £44.99 · 2 beanies £30 · Bag + beanie £54.99 · Ends 2 December' : 'Geared for greatness · Built by a runner'; });
+    document.querySelectorAll('[data-promo-summary]').forEach(node => { node.textContent=promoActive() ? 'Black Friday · Bag £44.99 · 2 beanies £30 · Bag + beanie £59.99 · Ends 2 December' : 'Geared for greatness · Built by a runner'; });
     document.querySelectorAll('[data-offer]').forEach(node => {
       node.hidden=!promoActive();
-      node.textContent=node.dataset.offer==='bag' ? 'Black Friday: £44.99 · Bag + beanie £54.99. Automatic savings at checkout. Ends 2 December.' : 'Black Friday: 2 or more £15 each · Bag + beanie £54.99. Mix your colours. Ends 2 December.';
+      node.textContent=node.dataset.offer==='bag' ? 'Black Friday: £44.99 · Bag + beanie £59.99. Automatic savings at checkout. Ends 2 December.' : 'Black Friday: 2 or more £15 each · Bag + beanie £59.99. Mix your colours. Ends 2 December.';
     });
   }
   refreshPromos();
