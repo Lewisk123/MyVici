@@ -35,10 +35,29 @@
   });
   function refreshPromos() {
     refreshPrices();
-    document.querySelectorAll('[data-promo-summary]').forEach(node => { node.textContent=promoActive() ? 'Black Friday · Bag £44.99 · 2 beanies £30 · Bag + beanie £59.99 · Ends 2 December' : 'Geared for greatness · Built by a runner'; });
+    const active=promoActive();
+    document.querySelectorAll('[data-promo-summary]').forEach(node => { node.textContent=active ? 'Black Friday · 2 beanies for £30 · Organiser bag £44.99 · Bag + beanie £59.99 · Ends 2 December' : 'Geared for greatness · Built by a runner'; });
+    document.querySelectorAll('[data-promo-ribbon]').forEach(ribbon => {
+      if(ribbon.dataset.promoState===String(active)) return;
+      ribbon.dataset.promoState=String(active);
+      ribbon.querySelector('[data-promo-label]').textContent=active ? 'Black Friday' : 'MYVICI';
+      const messages=active
+        ? ['2 beanies for £30', 'Mix any two colours', 'Organiser bag £44.99', 'Bag + beanie £59.99', 'Ends 2 December']
+        : ['Geared for greatness', 'Built by a runner', 'Kit for everyday adventure'];
+      ribbon.querySelectorAll('[data-promo-group]').forEach(group => group.replaceChildren(...messages.map(text=>el('span','',text))));
+    });
     document.querySelectorAll('[data-offer]').forEach(node => {
-      node.hidden=!promoActive();
-      node.textContent=node.dataset.offer==='bag' ? 'Black Friday: £44.99 · Bag + beanie £59.99. Automatic savings at checkout. Ends 2 December.' : 'Black Friday: 2 or more £15 each · Bag + beanie £59.99. Mix your colours. Ends 2 December.';
+      node.hidden=!active;
+      if(!active || node.dataset.promoState==='true') return;
+      node.dataset.promoState='true';
+      const isBag=node.dataset.offer==='bag';
+      const primary=el('span','offer-primary');
+      primary.append(el('span','offer-kicker','Black Friday'),
+        el('strong','offer-headline',isBag ? 'Organiser bag £44.99' : '2 beanies for £30'),
+        el('span','offer-detail',isBag ? 'Your race-day kit, organised.' : 'Mix any two colours.'));
+      const bundle=el('span','offer-bundle');
+      bundle.append(el('span','','Bag + beanie'),el('strong','','£59.99'));
+      node.replaceChildren(primary,bundle,el('span','offer-terms','Savings applied automatically at checkout. Ends 2 December. Delivery extra.'));
     });
   }
   refreshPromos();

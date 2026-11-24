@@ -4,6 +4,15 @@
   const updateHeader = () => header?.classList.toggle('scrolled', window.scrollY > 40 || document.body.classList.contains('product-page'));
   updateHeader();
   window.addEventListener('scroll', updateHeader, {passive:true});
+  document.querySelectorAll('[data-promo-ribbon]').forEach(ribbon => {
+    const toggle=ribbon.querySelector('[data-promo-toggle]');
+    toggle?.addEventListener('click', () => {
+      const paused=ribbon.classList.toggle('is-paused');
+      toggle.setAttribute('aria-pressed',String(paused));
+      toggle.setAttribute('aria-label',paused ? 'Resume scrolling offers' : 'Pause scrolling offers');
+      toggle.querySelector('span').textContent=paused ? '▶' : 'Ⅱ';
+    });
+  });
   document.querySelectorAll('[data-gallery]').forEach(gallery => {
     const photo = gallery.querySelector('.gallery-image');
     const buttons = [...gallery.querySelectorAll('.picker button')];
