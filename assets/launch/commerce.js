@@ -11,6 +11,7 @@
   const money = value => formatter.format(Number(value?.amount ?? value ?? 0));
   let products = initialProducts;
   let available = false;
+  let checkingStock = true;
   let busy = false;
   let cart = null;
   let cartId = null;
@@ -23,16 +24,16 @@
     if(isBag && promoActive()) { const original=document.createElement('s');original.textContent=money(price);original.setAttribute('aria-label','Regular price '+money(price));node.append(original); }
   }
   function refreshPrices() {
-    panels.forEach(panel=>{const variant=variantFor(panel);if(variant)showPrice(panel.querySelector('[data-product-price]'),variant.price,panel.dataset.product==='bag');});
+    panels.forEach(panel=>{const variant=variantFor(panel);if(variant){showPrice(panel.querySelector('[data-product-price]'),variant.price,panel.dataset.product==='bag');const label=panel.querySelector('[data-single-choice]');if(label)label.textContent='Single beanie · '+variant.title;}});
     document.querySelectorAll('[data-catalog-bag-price]').forEach(node=>showPrice(node,products.bag.variants.nodes[0].price,true));
   }
-  const setButtons = () => panels.forEach(panel => {
+  const setButtons = () => { panels.forEach(panel => {
     const variant=variantFor(panel);
     panel.querySelectorAll('[data-buy]').forEach(button => {
       button.disabled=busy || !available || !variant?.availableForSale;
       button.textContent=!busy && available && !variant?.availableForSale ? 'Sold out' : button.dataset.buy==='now' ? 'Buy now' : 'Add to bag';
     });
-  });
+  }); refreshOfferControls(); };
   function refreshPromos() {
     refreshPrices();
     const active=promoActive();
@@ -46,20 +47,9 @@
         : ['Geared for greatness', 'Built by a runner', 'Kit for everyday adventure'];
       ribbon.querySelectorAll('[data-promo-group]').forEach(group => group.replaceChildren(...messages.map(text=>el('span','',text))));
     });
-    document.querySelectorAll('[data-offer]').forEach(node => {
-      node.hidden=!active;
-      if(!active || node.dataset.promoState==='true') return;
-      node.dataset.promoState='true';
-      const isBag=node.dataset.offer==='bag';
-      const primary=el('span','offer-primary');
-      primary.append(el('span','offer-kicker','Black Friday'),
-        el('strong','offer-headline',isBag ? 'Organiser bag £44.99' : '2 beanies for £30'),
-        el('span','offer-detail',isBag ? 'Your race-day kit, organised.' : 'Mix any two colours.'));
-      const bundle=el('span','offer-bundle');
-      bundle.append(el('span','','Bag + beanie'),el('strong','','£59.99'));
-      node.replaceChildren(primary,bundle,el('span','offer-terms','Savings applied automatically at checkout. Ends 2 December. Delivery extra.'));
-    });
+    refreshOfferControls();
   }
+  document.querySelectorAll('[data-offer-picker]').forEach(buildOfferPicker);
   refreshPromos();
   window.addEventListener('pageshow', refreshPromos);
   setInterval(refreshPromos,60000);
@@ -90,6 +80,83 @@
     if(className) node.className=className;
     if(text!==undefined) node.textContent=text;
     return node;
+  }
+  function buildOfferPicker(form, index) {
+    const pair=form.dataset.offerPicker==='pair';
+    const prefix='offer-'+index;
+    const title=el('h3','offer-heading',pair?'2 beanies for £30':'Bag + beanie £59.99');
+    title.id=prefix+'-title'; form.setAttribute('aria-labelledby',title.id);
+    form.append(el('p','offer-kicker','Black Friday'),title,
+      el('p','offer-intro',pair?'Choose two different colours or two of your favourite.':'One organiser bag + one beanie in your favourite colour.'));
+    const fields=el('fieldset','offer-options '+(pair?'pair-options':'bundle-options'));
+    fields.append(el('legend','',pair?'Choose your two beanies':'Choose your beanie colour'));
+    for(const variant of products.beanie.variants.nodes) {
+      const row=el('label','offer-option');
+      const image=el('img');image.src=variant.image.url;image.alt='';image.width=48;image.height=48;image.loading='lazy';
+      const name=el('span','offer-colour',variant.title);
+      const input=el('input');input.type=pair?'number':'radio';input.dataset.offerVariant=variant.id;
+      input.setAttribute('aria-label',pair?variant.title+' quantity':variant.title);
+      if(pair){input.min='0';input.max='2';input.step='1';input.value='0';input.inputMode='numeric';}
+      else {input.name=prefix+'-colour';input.value=variant.id;}
+      row.append(image,name,input); fields.append(row);
+    }
+    const summary=el('p','offer-selection');summary.dataset.selectionSummary='';summary.id=prefix+'-selection';summary.setAttribute('aria-live','polite');
+    const button=el('button','primary-button offer-submit',pair?'Add 2 beanies · £30':'Add bag + beanie · £59.99');button.type='submit';button.disabled=true;button.setAttribute('aria-describedby',summary.id);
+    const message=el('p','offer-status');message.dataset.offerStatus='';message.setAttribute('role','status');
+    form.append(fields,summary,button,el('p','offer-terms',pair?'£4 standard delivery. Offer ends 2 December.':'£6.99 standard delivery. Offer ends 2 December.'),message);
+    form.addEventListener('input',()=>{message.textContent='';refreshOfferControls();});
+    form.addEventListener('submit',async event=>{
+      event.preventDefault();
+      if(busy)return;
+      const choice=offerSelection(form);
+      if(!promoActive() || !available || choice.error){message.textContent=!promoActive()?'This offer has ended.':!available?'Please wait while we check availability.':choice.error;return;}
+      if(!form.reportValidity())return;
+      busy=true;setButtons();message.textContent='Adding your offer to the bag…';
+      try {await addCartLines(choice.lines);message.textContent='Your offer has been added.';openCart();}
+      catch(error){message.textContent=error.name==='TimeoutError'?'The shop took too long to respond. Please try again.':error.message;}
+      finally {busy=false;setButtons();renderCart();}
+    });
+  }
+  function offerSelection(form) {
+    const variants=products.beanie.variants.nodes;
+    const inputs=[...form.querySelectorAll('[data-offer-variant]')];
+    const pair=form.dataset.offerPicker==='pair';
+    const selected=inputs.map(input=>({merchandiseId:input.dataset.offerVariant,quantity:pair?Number(input.value):(input.checked?1:0)}));
+    const total=selected.reduce((sum,line)=>sum+line.quantity,0);
+    const invalid=selected.some(line=>!Number.isInteger(line.quantity)||line.quantity<0||line.quantity>(pair?2:1));
+    const lines=selected.filter(line=>line.quantity>0);
+    let error=invalid?'Use whole numbers from 0 to 2.':pair?(total===2?'':'Choose exactly 2 beanies for this offer.'):(total===1?'':'Choose a beanie colour for your bundle.');
+    if(lines.some(line=>!variants.find(v=>v.id===line.merchandiseId)?.availableForSale))error='One of your colours is sold out. Please choose another.';
+    if(!pair){const bag=products.bag.variants.nodes[0];if(!bag?.availableForSale)error='The organiser bag is currently sold out.';else lines.unshift({merchandiseId:bag.id,quantity:1});}
+    return {lines,error,total,invalid};
+  }
+  function refreshOfferControls() {
+    document.querySelectorAll('[data-offer-picker]').forEach(form=>{
+      form.hidden=!promoActive();
+      const choice=offerSelection(form);
+      const pair=form.dataset.offerPicker==='pair';
+      form.querySelectorAll('[data-offer-variant]').forEach(input=>{
+        const variant=products.beanie.variants.nodes.find(v=>v.id===input.dataset.offerVariant);
+        input.disabled=busy || !available || !variant?.availableForSale;
+        const row=input.closest('.offer-option');
+        row.classList.toggle('is-selected',pair?Number(input.value)>0:input.checked);
+        row.classList.toggle('is-sold-out',available && !variant?.availableForSale);
+        row.querySelector('.offer-colour').textContent=(variant?.title||'Unavailable')+(available && !variant?.availableForSale?' · Sold out':'');
+      });
+      form.querySelector('[data-selection-summary]').textContent=!available?(checkingStock?'Checking availability…':'Stock check unavailable. Refresh to try again.'):pair?(choice.invalid||choice.total===2&&choice.error?choice.error:choice.total+' / 2 selected'+(choice.total===2?' · Ready to add':choice.total>2?' · Choose only 2':'')):(choice.error||'Ready to add your bag + beanie');
+      form.querySelector('button[type="submit"]').disabled=busy||!available||!promoActive()||Boolean(choice.error);
+    });
+  }
+  async function addCartLines(lines) {
+    await readyCart;
+    const existing=Boolean(cartId);
+    const variables=existing?{cartId,lines}:{input:{buyerIdentity:{countryCode:'GB'},lines}};
+    const data=await api(existing?'AddLines':'CreateCart',variables);
+    const result=data[existing?'cartLinesAdd':'cartCreate'];
+    if(result.cart)saveCart(result.cart);
+    if(result.userErrors?.length)throw new Error(result.userErrors.map(e=>e.message).join(' '));
+    if(!result.cart)throw new Error('Your bag could not be updated. Please try again.');
+    dialog.querySelector('.cart-status').textContent='';
   }
   function renderCart() {
     document.querySelectorAll('[data-cart-count]').forEach(node => {node.textContent=cart?.totalQuantity||0;});
@@ -145,6 +212,7 @@
         status(panel,'Unable to check stock. Refresh to try again, or contact hello@myvici.com.');
       });
     }
+    checkingStock=false;
     setButtons();
   }
   const readyCart=restoreCart().catch(error=>{dialog.querySelector('.cart-status').textContent=error.message;});
@@ -158,6 +226,7 @@
     const panel=event.target.closest('[data-product]');
     const variant=variantFor(panel);
     if(variant)showPrice(panel.querySelector('[data-product-price]'),variant.price,panel.dataset.product==='bag');
+    const label=panel.querySelector('[data-single-choice]');if(label && variant)label.textContent='Single beanie · '+variant.title;
     status(panel,available?(variant?.availableForSale?'In stock. Ready for your next adventure.':'This colour is currently sold out.'):'Checking availability…');
     const explore=panel.querySelector('.product-explore');
     if(explore){const url=new URL(explore.href);url.searchParams.set('variant',panel.dataset.variant);explore.href=url.href;}
@@ -171,14 +240,8 @@
     if(!input.reportValidity())return;
     busy=true;setButtons();status(panel,'Adding to your bag…');
     try {
-      await readyCart;
       const line={merchandiseId:'gid://shopify/ProductVariant/'+panel.dataset.variant,quantity:Number(input.value)};
-      const operation=cartId?'AddLines':'CreateCart';
-      const variables=cartId?{cartId,lines:[line]}:{input:{buyerIdentity:{countryCode:'GB'},lines:[line]}};
-      const data=await api(operation,variables);const result=data[cartId?'cartLinesAdd':'cartCreate'];
-      if(result.cart)saveCart(result.cart);
-      if(result.userErrors?.length)throw new Error(result.userErrors.map(e=>e.message).join(' '));
-      if(!result.cart)throw new Error('Your bag could not be updated. Please try again.');
+      await addCartLines([line]);
       status(panel,'Added to your bag.');
       if(button.dataset.buy==='now') { const destination=checkoutURL(cart.checkoutUrl);window.dispatchEvent(new Event('myvici:checkout'));location.assign(destination); } else openCart();
     } catch(error){status(panel,error.name==='TimeoutError'?'The shop took too long to respond. Please try again.':error.message);}
