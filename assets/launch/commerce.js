@@ -20,7 +20,7 @@
   const status = (panel, text) => { const node=panel.querySelector('.purchase-status'); if(node) node.textContent=text; };
   const variantFor = panel => products[panel.dataset.product]?.variants.nodes.find(v => v.id.endsWith('/'+panel.dataset.variant));
   function showPrice(node, price, isBag) {
-    node.replaceChildren(document.createTextNode(money(isBag && promoActive() ? Math.max(0, Number(price.amount)-15) : price)));
+    node.replaceChildren(document.createTextNode(money(isBag && promoActive() ? 39.99 : price)));
     if(isBag && promoActive()) { const original=document.createElement('s');original.textContent=money(price);original.setAttribute('aria-label','Regular price '+money(price));node.append(original); }
   }
   function refreshPrices() {
@@ -37,13 +37,13 @@
   function refreshPromos() {
     refreshPrices();
     const active=promoActive();
-    document.querySelectorAll('[data-promo-summary]').forEach(node => { node.textContent=active ? 'Black Friday · 2 beanies for £30 · Organiser bag £44.99 · Bag + beanie £59.99 · Ends 2 December' : 'Geared for greatness · Built by a runner'; });
+    document.querySelectorAll('[data-promo-summary]').forEach(node => { node.textContent=active ? 'Black Friday · 2 beanies for £25 · Organiser bag £39.99 · Bag + beanie £49.99 · Ends 2 December' : 'Geared for greatness · Built by a runner'; });
     document.querySelectorAll('[data-promo-ribbon]').forEach(ribbon => {
       if(ribbon.dataset.promoState===String(active)) return;
       ribbon.dataset.promoState=String(active);
       ribbon.querySelector('[data-promo-label]').textContent=active ? 'Black Friday' : 'MYVICI';
       const messages=active
-        ? ['2 beanies for £30', 'Mix any two colours', 'Organiser bag £44.99', 'Bag + beanie £59.99', 'Ends 2 December']
+        ? ['2 beanies for £25', 'Mix any two colours', 'Organiser bag £39.99', 'Bag + beanie £49.99', 'Ends 2 December']
         : ['Geared for greatness', 'Built by a runner', 'Kit for everyday adventure'];
       ribbon.querySelectorAll('[data-promo-group]').forEach(group => group.replaceChildren(...messages.map(text=>el('span','',text))));
     });
@@ -84,7 +84,7 @@
   function buildOfferPicker(form, index) {
     const pair=form.dataset.offerPicker==='pair';
     const prefix='offer-'+index;
-    const title=el('h3','offer-heading',pair?'2 beanies for £30':'Bag + beanie £59.99');
+    const title=el('h3','offer-heading',pair?'2 beanies for £25':'Bag + beanie £49.99');
     title.id=prefix+'-title'; form.setAttribute('aria-labelledby',title.id);
     form.append(el('p','offer-kicker','Black Friday'),title,
       el('p','offer-intro',pair?'Choose two different colours or two of your favourite.':'One organiser bag + one beanie in your favourite colour.'));
@@ -101,7 +101,7 @@
       row.append(image,name,input); fields.append(row);
     }
     const summary=el('p','offer-selection');summary.dataset.selectionSummary='';summary.id=prefix+'-selection';summary.setAttribute('aria-live','polite');
-    const button=el('button','primary-button offer-submit',pair?'Add 2 beanies · £30':'Add bag + beanie · £59.99');button.type='submit';button.disabled=true;button.setAttribute('aria-describedby',summary.id);
+    const button=el('button','primary-button offer-submit',pair?'Add 2 beanies · £25':'Add bag + beanie · £49.99');button.type='submit';button.disabled=true;button.setAttribute('aria-describedby',summary.id);
     const message=el('p','offer-status');message.dataset.offerStatus='';message.setAttribute('role','status');
     form.append(fields,summary,button,el('p','offer-terms',pair?'£4 standard delivery. Offer ends 2 December.':'£6.99 standard delivery. Offer ends 2 December.'),message);
     form.addEventListener('input',()=>{message.textContent='';refreshOfferControls();});
