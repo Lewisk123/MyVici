@@ -184,7 +184,7 @@
       const remove=el('button','basket-remove','Remove');remove.type='button';remove.setAttribute('aria-label','Remove '+name);remove.disabled=busy;remove.addEventListener('click',()=>updateLine(line.id,0));controls.append(remove);
       details.append(controls);row.append(details);list.append(row);
     }
-    dialog.querySelector('[data-cart-total]').textContent=money(cart?.cost.totalAmount);
+    dialog.querySelector('[data-cart-total]').textContent=money(cart?.cost.subtotalAmount);
     const checkout=dialog.querySelector('[data-checkout]');
     checkout.hidden=!cart?.totalQuantity;
     if(cart?.totalQuantity) {
